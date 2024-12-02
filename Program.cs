@@ -1,69 +1,150 @@
-using app.Entities;
-using Microsoft.AspNetCore.Components;
-using System;
-using System.Text.Json;
+using app.Context;
+using app.Router;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 //builder.Services.AddCors(options =>
 //{
 //    options.AddDefaultPolicy(policy =>
 //    {
 //        policy.AllowAnyOrigin() // Разрешить запросы с любого источника
-//              .AllowAnyMethod() // Разрешить любые методы (GET, POST и т. д.)
+//              .AllowAnyMethod() // Разрешить любые методы 
 //              .AllowAnyHeader(); // Разрешить любые заголовки
 //    });
 //});
 var app = builder.Build();
 //app.UseCors();
 
-//app.Run(Routing);
-//async Task Routing(HttpContext context)
+DataBase db = new DataBase();
+
+
+
+app.MapGet("/", (HttpContext context) =>
+{
+    context.Response.Redirect("/api");
+    //await TestSQL(context);
+});
+
+app.MapGet("/api", (Delegate)(async (HttpContext context) =>
+{
+    var routerInfo = new List<RouteInfo>()
+    {
+        //new RouteInfo("/api/component-kinds", "ComponentKinds"),
+        //new RouteInfo("/api/component-types", "ComponentTypes"),
+        //new RouteInfo("/api/manufactures", "Manufacturers"),
+        //new RouteInfo("/api/technologies", "Technologies"),
+        new RouteInfo("/api/resistors", "Resistors"),
+        new RouteInfo("/api/transistors", "Transistors"),
+        new RouteInfo("/api/diods", "Diods"),
+        new RouteInfo("/api/microchips", "Microchips"),
+        new RouteInfo("/api/capacitors", "Capacitors")
+    };
+
+
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(routerInfo);
+}));
+
+//app.MapGet("/api/component-kinds", async (HttpContext context) =>
 //{
 //    var response = context.Response;
-//    var request = context.Request;
+//    var items = db.ComponentKinds.ToList();
 
-//    if (request.Path == "/")
-//        context.Response.Redirect("/Home");
+//    context.Response.ContentType = "application/json";
+//    await context.Response.WriteAsJsonAsync(items);
+//});
 
-//    string fullPath = @"./View"+ request.Path + "/index.html";
+//app.MapGet("/api/component-types", async (HttpContext context) =>
+//{
+//    var response = context.Response;
+//    var items = db.ComponentTypes.ToList();
 
-//    if (!File.Exists(fullPath))
-//        fullPath = @"./View/NotFound/index.html";
+//    context.Response.ContentType = "application/json";
+//    await context.Response.WriteAsJsonAsync(items);
+//});
 
-//    await response.SendFileAsync(fullPath);
-//}
+//app.MapGet("/api/manufactures", async (HttpContext context) =>
+//{
+//    var response = context.Response;
+//    var items = db.Manufacturers.ToList();
 
-app.MapGet("/test", async (HttpContext context) =>
-{
-    await Test(context);
-});
-async Task Test(HttpContext context)
+//    context.Response.ContentType = "application/json";
+//    await context.Response.WriteAsJsonAsync(items);
+//});
+
+//app.MapGet("/api/technologies", async (HttpContext context) =>
+//{
+//    var response = context.Response;
+//    var items = db.Technologies.ToList();
+
+//    context.Response.ContentType = "application/json";
+//    await context.Response.WriteAsJsonAsync(items);
+//});
+
+app.MapGet("/api/resistors", async (HttpContext context) =>
 {
     var response = context.Response;
-
-    List<object> items = new List<object>() {
-        new Transistors() {
-        ID = 1,
-        ComponentName = "transistor1"
-    },
-        new Transistors()
-    {
-        ID = 2,
-        ComponentName = "transistor2"
-    },
-        new Transistors()
-    {
-        ID = 3,
-        ComponentName = "transistor3"
-        }
-    };
+    var items = db.Resistors.ToList();
 
     context.Response.ContentType = "application/json";
     await context.Response.WriteAsJsonAsync(items);
-}
+});
+
+app.MapGet("/api/transistors", async (HttpContext context) =>
+{
+    var response = context.Response;
+    var items = db.Transistors.ToList();
+
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(items);
+});
+
+app.MapGet("/api/diods", async (HttpContext context) =>
+{
+    var response = context.Response;
+    var items = db.Diods.ToList();
+
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(items);
+});
+
+app.MapGet("/api/microchips", async (HttpContext context) =>
+{
+    var response = context.Response;
+    var items = db.Microchips.ToList();
+
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(items);
+});
+
+app.MapGet("/api/capacitors", async (HttpContext context) =>
+{
+    var response = context.Response;
+    var items = db.Capacitors.ToList();
+
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(items);
+});
+
+
+//async Task TestSQL(HttpContext context) {
+
+//    var response = context.Response;
+//    //var items = db.ComponentKinds.ToList();
+//    //var items = db.ComponentTypes.ToList();
+//    //var items = db.Manufacturers.ToList();
+//    //var items = db.Technologies.ToList();
+//    //var items = db.Resistors.ToList();
+//    //var items = db.Transistors.ToList();
+//    //var items = db.Diods.ToList();
+//    //var items = db.Capacitors.ToList();
+
+//    context.Response.ContentType = "application/json";
+//    await context.Response.WriteAsJsonAsync(items);
+
+//}
 
 
 app.Run();
-
 

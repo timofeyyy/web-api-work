@@ -10,6 +10,6 @@ namespace app.Entities
         public string RuComponentKind { get; set; }
         [StringLength(450)]
         public string EnComponentKind { get; set; }
-        public object Capacitors { get; set; }
+        public List<Capacitors> Capacitors { get; set; }
     }
 }

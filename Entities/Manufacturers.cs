@@ -9,12 +9,11 @@ namespace app.Entities
 
         [StringLength(450)]
         public string ManufacturerName { get; set; }
-
-        public object Capacitors { get; set; }
-        public object Resistors { get; set; }
-        public object Diods { get; set; }
-        public object Microchips { get; set; }
-        public object Transistors { get; set; }
+        public List<Capacitors> Capacitors { get; set; }
+        public List<Resistors> Resistors { get; set; }
+        public List<Diods> Diods { get; set; }
+        public List<Microchips> Microchips { get; set; }
+        public List<Transistors> Transistors { get; set; }
         
     }
 }
