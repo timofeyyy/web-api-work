@@ -1,11 +1,13 @@
 ﻿using app.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Globalization;
 
 namespace app.Context
 {
     public class DataBase : DbContext
     {
+        private readonly string _connectionString;
         public DbSet<Capacitors> Capacitors { get; set; }
         public DbSet<Resistors> Resistors { get; set; }
         public DbSet<Diods> Diods { get; set; }
@@ -15,11 +17,8 @@ namespace app.Context
         public DbSet<Manufacturers> Manufacturers { get; set; }
         public DbSet<ComponentKinds> ComponentKinds { get; set; }
         public DbSet<ComponentTypes> ComponentTypes { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //optionsBuilder.UseSqlServer(@"Server=tcp:127.0.0.1,1433;Initial Catalog=master;Persist Security Info=False;User ID=HP;Password=Z183I2196B!N%W!X1Gi@YStV4v96QJxT@X*&I&4C!&ZC86L0!y;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
-            optionsBuilder.UseSqlServer(@"Data Source=Timofey\SQLEXPRESS;Database=ComponentDB;Integrated Security=True;TrustServerCertificate=True");
-        }
+
+        public DataBase(DbContextOptions<DataBase> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
