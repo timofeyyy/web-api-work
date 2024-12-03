@@ -123,7 +123,7 @@ app.MapGet("/api/capacitors", async (DataBase db, HttpContext context) =>
 });
 
 
-//async Task TestSQL(HttpContext context) {
+//async Task TestSQL(DataBase db, HttpContext context) {
 
 //    var response = context.Response;
 //    //var items = db.ComponentKinds.ToList();
